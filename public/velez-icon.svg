@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125" fill="none">
+  <polygon points="50,2 53.5,12 64,12 55.5,18 58.5,28 50,22.5 41.5,28 44.5,18 36,12 46.5,12" fill="#FFB800" stroke="#DF9B00" stroke-width="0.5"/>
+  <path d="M50 32 C75 32 88 34 88 56 C88 88 64 104 50 114 C36 104 12 88 12 56 C12 34 25 32 50 32 Z" fill="#002D72" stroke="#001844" stroke-width="2.5"/>
+  <path d="M50 36 C72 36 84 38 84 57 C84 85 62 100 50 110 C38 100 16 85 16 57 C16 38 28 36 50 36 Z" fill="#FFFFFF"/>
+  <path d="M16 48 L50 82 L84 48 L84 62 L50 96 L16 62 Z" fill="#003882"/>
+  <g font-family="system-ui, -apple-system, sans-serif" font-weight="900" text-anchor="middle" fill="#003882">
+    <text x="50" y="55" font-size="14" letter-spacing="1">C A V S</text>
+  </g>
+</svg>
