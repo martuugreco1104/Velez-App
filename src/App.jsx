@@ -43,6 +43,7 @@ export default function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCarnetOpen, setIsCarnetOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
+  const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   const [isReceiptOpen, setIsReceiptOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [unreadNotifications, setUnreadNotifications] = useState(3);
@@ -266,6 +267,7 @@ export default function App() {
               onAddToCart={(item) => showToast(`Agregaste "${item.name}" (Talle ${item.chosenSize}) al carrito.`)}
               onOpenPay={handleOpenPay}
               showToast={showToast}
+              onProductDetailToggle={setIsProductDetailOpen}
             />
           )}
 
@@ -354,14 +356,15 @@ export default function App() {
 
         </main>
 
-        {/* BOTTOM NAVIGATION BAR (Oculto durante inscripción y abonos en pantalla completa) */}
-        {!selectedActivity && activeTab !== 'abonos' && (
+        {/* BOTTOM NAVIGATION BAR (Oculto durante inscripción, detalle de producto y abonos en pantalla completa) */}
+        {!selectedActivity && activeTab !== 'abonos' && !isProductDetailOpen && (
           <BottomNav 
             activeTab={['standings', 'fixture', 'beneficios', 'turnos', 'grupo-familiar', 'accesos', 'abonos'].includes(activeTab) ? 'inicio' : activeTab}
             onTabChange={(tab) => {
               setActiveTab(tab);
               setSearchQuery('');
               setSelectedActivity(null);
+              setIsProductDetailOpen(false);
               const mainEl = document.querySelector('main');
               if (mainEl) mainEl.scrollTo({ top: 0, behavior: 'instant' });
               window.scrollTo({ top: 0, behavior: 'instant' });

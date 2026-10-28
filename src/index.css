@@ -47,7 +47,29 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
+}
+
+/* Ocultar badge flotante de Netlify que tapa la barra de navegación inferior en smartphones */
+#nl-badge-frame,
+iframe[id*="nl-badge"],
+[id*="netlify-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Soporte de Safe Areas para iPhone con notch y Home Indicator */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+.pt-safe {
+  padding-top: max(1rem, env(safe-area-inset-top));
 }
 
 @layer utilities {

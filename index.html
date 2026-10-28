@@ -12,6 +12,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class="bg-slate-100 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+    <!-- Script para remover badge preview de Netlify que tapa la barra de navegación inferior en móviles -->
+    <script>
+      (function() {
+        const removeNetlifyBadge = () => {
+          const badge = document.getElementById('nl-badge-frame');
+          if (badge) badge.remove();
+        };
+        removeNetlifyBadge();
+        const obs = new MutationObserver(removeNetlifyBadge);
+        obs.observe(document.documentElement, { childList: true, subtree: true });
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

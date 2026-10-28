@@ -3,8 +3,8 @@ import { Home, ShoppingBag, Compass, User, QrCode } from 'lucide-react';
 
 export default function BottomNav({ activeTab, onTabChange, onOpenCarnet }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 shadow-nav-bar">
-      <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl mx-auto px-4 py-2 flex items-center justify-between relative">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 shadow-nav-bar pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl mx-auto px-4 pt-2 flex items-center justify-between relative">
         
         {/* Tab 1: Inicio */}
         <button

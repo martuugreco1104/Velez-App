@@ -18,7 +18,7 @@ import {
   CreditCard
 } from 'lucide-react';
 
-export default function ClubShop({ onAddToCart, user, onOpenPay, showToast }) {
+export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onProductDetailToggle }) {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState('M');
@@ -54,6 +54,12 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast }) {
     setSelectedProduct(product);
     setSelectedSize(product.sizes[0] || 'M');
     setActivePhotoIdx(0);
+    onProductDetailToggle?.(true);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedProduct(null);
+    onProductDetailToggle?.(false);
   };
 
   const handleAddToCart = (openDrawer = false) => {
@@ -153,11 +159,11 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast }) {
   // ==============================================================
   if (selectedProduct) {
     return (
-      <div className="space-y-4 animate-fadeIn font-sans pb-32">
+      <div className="space-y-4 animate-fadeIn font-sans pb-36">
         {/* Top bar de navegación */}
         <div className="flex items-center justify-between">
           <button
-            onClick={() => setSelectedProduct(null)}
+            onClick={handleCloseDetail}
             className="h-10 px-2 -ml-2 rounded-xl text-slate-600 hover:text-[#0055A4] hover:bg-slate-100 flex items-center gap-1.5 text-xs font-bold transition-colors active:scale-[0.98]"
           >
             <ArrowLeft className="w-4 h-4 shrink-0" />
@@ -287,7 +293,7 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast }) {
         </div>
 
         {/* STICKY FOOTER EN LA BASE (CON BOTÓN DE COMPRAR Y AGREGAR) */}
-        <div className="fixed bottom-0 left-0 right-0 max-w-md md:max-w-xl lg:max-w-2xl mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 shadow-2xl flex items-center justify-between z-50">
+        <div className="fixed bottom-0 left-0 right-0 max-w-md md:max-w-xl lg:max-w-2xl mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl flex items-center justify-between z-50">
           <div>
             <span className="text-xs text-slate-500 font-medium block">Total Socia:</span>
             <span className="text-2xl font-black text-[#001D4A] font-mono">

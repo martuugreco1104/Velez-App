@@ -32,3 +32,6 @@ dist-ssr
 *.zip
 *.mp4
 Gotham-Font-Family/
+audit-screenshots/
+test-*.cjs
+test-*.js
