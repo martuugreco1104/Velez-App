@@ -23,6 +23,8 @@ export default function MyActivitiesCard({ activities, onExploreMore, onSelectAc
         {activities.map((act) => {
           const isWater = act.id.includes('natacion');
           const Icon = isWater ? Waves : Dumbbell;
+          const isPending = act.status?.toLowerCase().includes('pendiente');
+          const statusLabel = isPending ? 'Pendiente' : 'Al día';
 
           return (
             <div 
@@ -30,7 +32,7 @@ export default function MyActivitiesCard({ activities, onExploreMore, onSelectAc
               onClick={() => onSelectActivity && onSelectActivity(act)}
               className="group cursor-pointer p-4 rounded-2xl bg-white border border-slate-200/80 shadow-card-soft hover:shadow-card-hover hover:border-velez-primary transition-all flex items-center justify-between active:scale-[0.98]"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 min-w-0">
                 <div className={`w-11 h-11 rounded-2xl flex items-center justify-center border shrink-0 ${
                   isWater 
                     ? 'bg-sky-50 text-sky-600 border-sky-200' 
@@ -39,13 +41,17 @@ export default function MyActivitiesCard({ activities, onExploreMore, onSelectAc
                   <Icon className="w-5 h-5" />
                 </div>
 
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-xs font-bold text-slate-900 group-hover:text-velez-primary transition-colors">
+                    <h4 className="text-xs font-bold text-slate-900 group-hover:text-velez-primary transition-colors truncate">
                       {act.name}
                     </h4>
-                    <span className="text-[9px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 px-1.5 py-0.2 rounded-full">
-                      {act.status}
+                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shrink-0 border ${
+                      isPending 
+                        ? 'bg-orange-50 text-orange-800 border-orange-200' 
+                        : 'bg-emerald-50 text-[#0A7E43] border-emerald-200'
+                    }`}>
+                      {statusLabel}
                     </span>
                   </div>
 

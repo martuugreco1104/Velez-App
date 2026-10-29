@@ -16,7 +16,7 @@ export default function QuotaStatusCard({ user, onPay, onViewReceipt }) {
   // CASO 1: AL DÍA
   if (status === 'al_dia') {
     return (
-      <div className="relative overflow-hidden rounded-2xl bg-white border border-[#0A7E43]/30 shadow-card-soft p-5 transition-all">
+      <div id="cuota-social-card" className="relative overflow-hidden rounded-2xl bg-white border border-[#0A7E43]/30 shadow-card-soft p-5 transition-all">
         {/* Marca de agua vectorial de la «V» azulada */}
         <div className="pointer-events-none absolute -right-6 -bottom-6 w-36 h-36 opacity-[0.06] text-[#0055A4]">
           <svg viewBox="0 0 100 65" fill="none" className="w-full h-full">
@@ -64,7 +64,7 @@ export default function QuotaStatusCard({ user, onPay, onViewReceipt }) {
   // CASO 2: POR VENCER
   if (status === 'por_vencer') {
     return (
-      <div className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-card-soft p-5 transition-all">
+      <div id="cuota-social-card" className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-card-soft p-5 transition-all">
         {/* Marca de agua vectorial de la «V» azulada */}
         <div className="pointer-events-none absolute -right-6 -bottom-6 w-36 h-36 opacity-[0.05] text-[#0055A4]">
           <svg viewBox="0 0 100 65" fill="none" className="w-full h-full">
@@ -120,7 +120,7 @@ export default function QuotaStatusCard({ user, onPay, onViewReceipt }) {
     const cantCuotas = quotaInfo.mesesImpagos ? quotaInfo.mesesImpagos.length : 3;
 
     return (
-      <div className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-card-soft p-5 transition-all">
+      <div id="cuota-social-card" className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-card-soft p-5 transition-all">
         {/* Marca de agua vectorial de la «V» azulada */}
         <div className="pointer-events-none absolute -right-6 -bottom-6 w-36 h-36 opacity-[0.05] text-[#0055A4]">
           <svg viewBox="0 0 100 65" fill="none" className="w-full h-full">

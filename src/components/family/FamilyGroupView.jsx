@@ -20,6 +20,12 @@ import SummerCampView from './SummerCampView';
 
 export default function FamilyGroupView({ onBack, onPay, showToast, currentUser }) {
   const [familyData, setFamilyData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('velez_family_group');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
     if (currentUser?.hasFamilyGroup === false) {
       return {
         titular: {
@@ -35,21 +41,39 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
     return FAMILY_GROUP_MOCK;
   });
 
+  const saveFamilyData = (newData) => {
+    setFamilyData(newData);
+    try {
+      localStorage.setItem('velez_family_group', JSON.stringify(newData));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const [selectedMemberForCamp, setSelectedMemberForCamp] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // Formulario de nuevo menor
+  // Formulario de nuevo menor con máscara de 5 dígitos (XX.XXX)
   const [newMemberName, setNewMemberName] = useState('Lucas Greco');
   const [newMemberRel, setNewMemberRel] = useState('Hijo');
   const [newMemberAge, setNewMemberAge] = useState('9');
   const [newMemberDni, setNewMemberDni] = useState('54.891.203');
-  const [newMemberSocio, setNewMemberSocio] = useState('78.210');
+  const [newMemberSocio, setNewMemberSocio] = useState('84.105');
   const [newMemberSchool, setNewMemberSchool] = useState(true);
 
-  // Sincronizar si cambia el usuario simulado
+  // Helper para máscara estricta de 5 dígitos con punto (XX.XXX)
+  const formatSocioMask = (val) => {
+    const digits = String(val).replace(/\D/g, '').slice(0, 5);
+    if (digits.length > 2) {
+      return `${digits.slice(0, 2)}.${digits.slice(2, 5)}`;
+    }
+    return digits;
+  };
+
+  // Sincronizar si cambia el usuario simulado sin sobrescribir si ya hay datos
   useEffect(() => {
     if (currentUser?.hasFamilyGroup === false) {
-      setFamilyData({
+      const emptyGroup = {
         titular: {
           name: currentUser.nombre,
           role: "Titular / Administradora",
@@ -58,9 +82,8 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
           quotaStatus: currentUser.status
         },
         members: []
-      });
-    } else {
-      setFamilyData(FAMILY_GROUP_MOCK);
+      };
+      setFamilyData(emptyGroup);
     }
   }, [currentUser]);
 
@@ -93,25 +116,61 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
 
   const totalPendingAmount = pendingItems.reduce((acc, curr) => acc + curr.amount, 0);
 
-  // Manejar pago unificado
+  // Manejar pago unificado: actualiza de inmediato el estado en localStorage y recalcula a $0
   const handlePayUnified = () => {
     if (pendingItems.length === 0) return;
+    const count = pendingItems.length;
+
+    // Actualizar todos los miembros a 'al_dia'
+    const updatedMembers = familyData.members.map(m => ({
+      ...m,
+      quotaStatus: 'al_dia',
+      institute: m.institute ? {
+        ...m.institute,
+        status: 'al_dia'
+      } : m.institute
+    }));
+
+    const updatedData = {
+      ...familyData,
+      members: updatedMembers
+    };
+
+    saveFamilyData(updatedData);
+
     onPay(
       totalPendingAmount, 
-      `Pago Unificado Grupo Familiar (${pendingItems.length} conceptos: Cuota/Colegio)`
+      `Pago Unificado Grupo Familiar (${count} conceptos: Cuota/Colegio)`
     );
   };
 
-  // Manejar pago individual
-  const handlePaySingle = (amount, concept) => {
+  // Manejar pago individual: actualiza de inmediato el estado en localStorage
+  const handlePaySingle = (memberId, type, amount, concept) => {
+    const updatedMembers = familyData.members.map(m => {
+      if (m.id === memberId) {
+        if (type === 'quota') {
+          return { ...m, quotaStatus: 'al_dia' };
+        } else if (type === 'school' && m.institute) {
+          return { ...m, institute: { ...m.institute, status: 'al_dia' } };
+        }
+      }
+      return m;
+    });
+
+    const updatedData = {
+      ...familyData,
+      members: updatedMembers
+    };
+
+    saveFamilyData(updatedData);
     onPay(amount, concept);
   };
 
   // Confirmar inscripción a colonia
   const handleConfirmSummerCamp = (registrationData) => {
-    setFamilyData(prev => ({
-      ...prev,
-      members: prev.members.map(m => {
+    const updatedData = {
+      ...familyData,
+      members: familyData.members.map(m => {
         if (m.id === registrationData.memberId) {
           return {
             ...m,
@@ -125,15 +184,16 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
         }
         return m;
       })
-    }));
+    };
 
+    saveFamilyData(updatedData);
     setSelectedMemberForCamp(null);
     if (showToast) {
       showToast(`¡Inscripción confirmada para ${registrationData.memberName} en la Colonia 2027!`);
     }
   };
 
-  // Agregar nuevo familiar
+  // Agregar nuevo familiar con máscara oficial de 5 dígitos (XX.XXX)
   const handleAddNewMember = (e) => {
     e.preventDefault();
     if (!newMemberName.trim()) {
@@ -146,7 +206,7 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
       name: newMemberName.trim(),
       relationship: newMemberRel,
       age: parseInt(newMemberAge) || 9,
-      socioNumber: newMemberSocio.trim() || `${Math.floor(70000 + Math.random() * 20000)}`,
+      socioNumber: formatSocioMask(newMemberSocio) || "84.105",
       dni: newMemberDni.trim() || "54.891.203",
       avatar: newMemberRel === 'Hija' 
         ? "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80"
@@ -166,11 +226,12 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
       }
     };
 
-    setFamilyData(prev => ({
-      ...prev,
-      members: [createdMember, ...prev.members]
-    }));
+    const updatedData = {
+      ...familyData,
+      members: [createdMember, ...familyData.members]
+    };
 
+    saveFamilyData(updatedData);
     setIsAddModalOpen(false);
     if (showToast) {
       showToast(`¡${createdMember.name} fue vinculado con éxito a tu Grupo Familiar CAVS!`);
@@ -315,8 +376,8 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
                 className="rounded-2xl bg-white border border-slate-200/90 shadow-card-soft overflow-hidden transition-all hover:border-[#0055A4]/40"
               >
                 {/* Cabecera del Integrante: Ordenada y sin badges dispersos */}
-                <div className="p-4 bg-slate-50/80 border-b border-slate-100 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
+                <div className="p-4 bg-slate-50/80 border-b border-slate-100 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-3 min-w-0">
                     <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-white shadow-sm shrink-0">
                       <img 
                         src={member.avatar} 
@@ -324,21 +385,21 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
                         className="w-full h-full object-cover" 
                       />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-extrabold text-slate-900">{member.name}</h3>
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                        <h3 className="text-sm font-extrabold text-slate-900 truncate">{member.name}</h3>
+                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full whitespace-nowrap shrink-0">
                           {member.relationship} • {member.age} años
                         </span>
                       </div>
-                      <p className="text-xs text-slate-500 font-mono mt-0.5">
+                      <p className="text-xs text-slate-500 font-mono mt-0.5 truncate">
                         Socio Nº {member.socioNumber} • DNI {member.dni}
                       </p>
                     </div>
                   </div>
 
-                  <div className="text-right">
-                    <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border ${
+                  <div className="text-right shrink-0">
+                    <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border whitespace-nowrap shrink-0 ${
                       isMemberQuotaPaid && (!member.institute?.enrolled || isSchoolPaid)
                         ? 'bg-emerald-50 text-[#0A7E43] border-emerald-200' 
                         : 'bg-orange-50 text-orange-800 border-orange-200'
@@ -351,7 +412,7 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
                       <span>
                         {isMemberQuotaPaid && (!member.institute?.enrolled || isSchoolPaid)
                           ? 'Al día' 
-                          : 'Saldo pendiente'}
+                          : 'Pendiente'}
                       </span>
                     </span>
                   </div>
@@ -370,7 +431,7 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
 
                     {!isMemberQuotaPaid ? (
                       <button
-                        onClick={() => handlePaySingle(member.quotaAmount, `Cuota Social ${member.name} (Octubre 2026)`)}
+                        onClick={() => handlePaySingle(member.id, 'quota', member.quotaAmount, `Cuota Social ${member.name} (Octubre 2026)`)}
                         className="h-9 min-h-[40px] px-3.5 rounded-xl bg-[#0055A4] hover:bg-blue-700 text-white text-xs font-bold active:scale-95 transition-all shadow-xs"
                       >
                         Abonar
@@ -401,7 +462,7 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
                       <div>
                         {!isSchoolPaid ? (
                           <button
-                            onClick={() => handlePaySingle(member.institute.tuitionAmount, `Arancel Colegio ${member.name} (${member.institute.level})`)}
+                            onClick={() => handlePaySingle(member.id, 'school', member.institute.tuitionAmount, `Arancel Colegio ${member.name} (${member.institute.level})`)}
                             className="h-9 min-h-[40px] px-3.5 rounded-xl bg-[#0055A4] hover:bg-blue-700 text-white text-xs font-bold active:scale-95 transition-all shadow-xs"
                           >
                             Pagar Arancel
@@ -552,12 +613,13 @@ export default function FamilyGroupView({ onBack, onPay, showToast, currentUser 
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Nº Socio (Opcional)</label>
+                  <label className="font-bold text-slate-700 block mb-1">Nº Socio (Opcional - XX.XXX)</label>
                   <input 
                     type="text"
                     value={newMemberSocio}
-                    onChange={(e) => setNewMemberSocio(e.target.value)}
-                    placeholder="78.210"
+                    onChange={(e) => setNewMemberSocio(formatSocioMask(e.target.value))}
+                    placeholder="84.105"
+                    maxLength={6}
                     className="w-full h-10 px-3 rounded-xl border border-slate-200 font-mono focus:ring-2 focus:ring-[#0055A4]/20 outline-none"
                   />
                 </div>

@@ -34,7 +34,19 @@ import {
 import { CheckCircle2 } from 'lucide-react';
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState(socioAlDia);
+  const [currentUser, setCurrentUser] = useState(() => {
+    let savedActivities = null;
+    try {
+      const stored = localStorage.getItem('velez_user_activities');
+      if (stored) savedActivities = JSON.parse(stored);
+    } catch (e) {
+      console.error(e);
+    }
+    return {
+      ...socioAlDia,
+      misActividades: savedActivities || socioAlDia.misActividades
+    };
+  });
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [activeTab, setActiveTab] = useState('inicio');
   const [searchQuery, setSearchQuery] = useState('');
@@ -66,7 +78,17 @@ export default function App() {
 
   // Selector de perfiles para testing
   const handleSelectUser = (userProfile) => {
-    setCurrentUser(userProfile);
+    let savedActivities = null;
+    try {
+      const stored = localStorage.getItem('velez_user_activities');
+      if (stored) savedActivities = JSON.parse(stored);
+    } catch (e) {
+      console.error(e);
+    }
+    setCurrentUser({
+      ...userProfile,
+      misActividades: savedActivities || userProfile.misActividades
+    });
     const messages = {
       al_dia: userProfile.seasonTicket 
         ? "Perfil: Socia Abonada (Platea Norte Baja)" 
@@ -126,14 +148,22 @@ export default function App() {
       venue: actInfo.venue,
       days: (actInfo.chosenDays || []).join(', '),
       hours: actInfo.schedule ? actInfo.schedule.split('/')[0] : 'Horarios oficiales',
-      status: payNow ? 'Activo (Pagado)' : 'Inscripto (Pendiente de Pago)',
+      status: payNow ? 'Al día' : 'Pendiente',
       finalPrice: actInfo.finalPrice
     };
 
-    setCurrentUser(prev => ({
-      ...prev,
-      misActividades: [newAct, ...(prev.misActividades || []).filter(a => a.id !== actInfo.id)]
-    }));
+    setCurrentUser(prev => {
+      const updatedList = [newAct, ...(prev.misActividades || []).filter(a => a.id !== actInfo.id)];
+      try {
+        localStorage.setItem('velez_user_activities', JSON.stringify(updatedList));
+      } catch (e) {
+        console.error(e);
+      }
+      return {
+        ...prev,
+        misActividades: updatedList
+      };
+    });
 
     if (payNow) {
       handleOpenPay(
@@ -155,9 +185,15 @@ export default function App() {
     }
   };
 
-  // Navegación desde Drawer
+  // Navegación desde Drawer / Notificaciones
   const handleDrawerNavigate = (route) => {
-    if (route === 'cuenta-corriente') {
+    if (route === 'home-quota') {
+      setActiveTab('inicio');
+      setTimeout(() => {
+        const el = document.getElementById('cuota-social-card');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
+    } else if (route === 'cuenta-corriente') {
       setIsAccountModalOpen(true);
     } else if (route === 'grupo-familiar') {
       setActiveTab('grupo-familiar');

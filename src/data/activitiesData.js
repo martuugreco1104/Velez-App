@@ -57,6 +57,113 @@ export function getConsolidatedDays(activity) {
 }
 
 export const ACTIVITIES = [
+  // FÚTBOL RECREATIVO / SINTÉTICO POLIDEPORTIVO
+  {
+    id: 'futbol_recreativo',
+    name: 'Fútbol Recreativo / Sintético Polideportivo',
+    type: 'team_sport',
+    category: 'pelota',
+    venue: 'Polideportivo CAVS - Canchas de Césped Sintético',
+    schedule: 'Martes y Jueves de 19:00 a 22:00 h • Sábados torneos internos',
+    daysSummary: 'Martes, Jueves y Sábados',
+    priceOffice: 38000,
+    priceAutoDebit: 30400,
+    availableDays: ['MAR', 'JUE', 'SAB'],
+    requiresMedical: true,
+    tags: ['futbol', 'fútbol', 'recreativo', 'sintetico', 'sintético', 'polideportivo', 'torneo', 'canchas', 'pelota'],
+    description: 'Encuentros semanales recreativos y torneos internos en las canchas de césped sintético iluminadas del Polideportivo.',
+    levels: ['Intermedio / Libres', 'Mayores de 35', 'Femenino Abierto', 'Torneo Clausura'],
+    branches: [
+      {
+        name: 'Libre y Veteranos',
+        categories: [
+          {
+            name: 'Intermedio / Libres',
+            schedule: 'Martes y Jueves de 20:00 a 21:30 h',
+            venue: 'Polideportivo CAVS - Cancha Sintético 1',
+            days: ['MAR', 'JUE'],
+            priceOffice: 38000,
+            priceAutoDebit: 30400
+          },
+          {
+            name: 'Mayores de 35',
+            schedule: 'Martes y Jueves de 21:00 a 22:30 h',
+            venue: 'Polideportivo CAVS - Cancha Sintético 2',
+            days: ['MAR', 'JUE'],
+            priceOffice: 38000,
+            priceAutoDebit: 30400
+          }
+        ]
+      }
+    ]
+  },
+
+  // FUTSAL FORMATIVO
+  {
+    id: 'futsal_formativo',
+    name: 'Futsal Formativo',
+    type: 'team_sport',
+    category: 'pelota',
+    venue: 'Bajo Autopista / Microestadio CAVS',
+    schedule: 'Lunes, Miércoles y Viernes de 17:30 a 20:30 h según categoría',
+    daysSummary: 'Lunes, Miércoles y Viernes',
+    priceOffice: 39500,
+    priceAutoDebit: 31600,
+    availableDays: ['LUN', 'MIE', 'VIE'],
+    requiresMedical: true,
+    tags: ['futbol', 'fútbol', 'futsal', 'formativo', 'salon', 'salón', 'afa', 'microestadio', 'pelota'],
+    description: 'Escuela formativa de Futsal AFA con desarrollo técnico, táctico y fundamentación de fútbol de salón.',
+    levels: ['Promocionales (Cat. 2017/18)', 'Infantiles (Cat. 2014/15/16)', 'Juveniles (Cat. 2011/12/13)', 'Femenino Formativo'],
+    branches: [
+      {
+        name: 'Formativo',
+        categories: [
+          {
+            name: 'Infantiles (Cat. 2014/15/16)',
+            schedule: 'Lunes, Miércoles y Viernes de 18:00 a 19:30 h',
+            venue: 'Microestadio CAVS - Cancha 1',
+            days: ['LUN', 'MIE', 'VIE'],
+            priceOffice: 39500,
+            priceAutoDebit: 31600
+          }
+        ]
+      }
+    ]
+  },
+
+  // CAMPUS DE FÚTBOL VERANO
+  {
+    id: 'campus_futbol_verano',
+    name: 'Campus de Fútbol Verano',
+    type: 'team_sport',
+    category: 'pelota',
+    venue: 'Villa Olímpica / Polideportivo CAVS',
+    schedule: 'Lunes a Viernes de 09:00 a 13:00 h (Enero y Febrero 2027)',
+    daysSummary: 'Lunes a Viernes',
+    priceOffice: 65000,
+    priceAutoDebit: 52000,
+    availableDays: ['LUN', 'MAR', 'MIE', 'JUE', 'VIE'],
+    requiresMedical: true,
+    tags: ['futbol', 'fútbol', 'campus', 'verano', 'temporada', 'clinica', 'clínica', 'villa olimpica', 'villa olímpica'],
+    description: 'Clínica intensiva de verano con entrenadores oficiales del fútbol amateur de Vélez Sarsfield en la Villa Olímpica.',
+    levels: ['Turno Mañana (6 a 12 años)', 'Turno Mañana (13 a 17 años)', 'Especial Arqueros'],
+    branches: [
+      {
+        name: 'Campus Verano',
+        categories: [
+          {
+            name: 'Turno Mañana (6 a 12 años)',
+            schedule: 'Lunes a Viernes de 09:00 a 13:00 h',
+            venue: 'Villa Olímpica CAVS (Ituzaingó)',
+            days: ['LUN', 'MAR', 'MIE', 'JUE', 'VIE'],
+            priceOffice: 65000,
+            priceAutoDebit: 52000
+          }
+        ]
+      }
+    ]
+  },
+
   // 1. BÁSQUET
   {
     id: 'basquet',

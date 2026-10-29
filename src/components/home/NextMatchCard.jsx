@@ -135,13 +135,15 @@ export default function NextMatchCard({
         {/* CASO A: Socio Al Día SIN Abono (Acceso libre gratuito con Carnet Digital) */}
         {!isDebt && !hasSeasonTicket && (
           <>
-            <div className="p-3 rounded-xl bg-[#0A7E43]/10 border border-[#0A7E43]/25 flex items-center gap-2 text-xs text-[#0A7E43]">
-              <span className="w-2 h-2 rounded-full bg-[#0A7E43] shrink-0" />
-              <span className="font-bold text-xs">
-                Ingreso libre con Carnet Digital
-              </span>
-              <span className="text-[11px] text-[#0A7E43] font-semibold ml-auto">
-                Populares y Bianchi Alta
+            <div className="p-3 rounded-xl bg-[#0A7E43]/10 border border-[#0A7E43]/25 flex items-center justify-between gap-2 text-xs text-[#0A7E43]">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-[#0A7E43] shrink-0" />
+                <span className="font-bold text-xs truncate">
+                  Ingreso libre con Carnet Digital
+                </span>
+              </div>
+              <span className="text-[11px] text-[#0A7E43] font-semibold whitespace-nowrap shrink-0">
+                Populares y Plateas
               </span>
             </div>
 

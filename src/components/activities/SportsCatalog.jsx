@@ -17,6 +17,13 @@ export default function SportsCatalog({ onSelectActivity, userAptoValid, externa
   const [activeCategory, setActiveCategory] = useState('todos');
   const [searchQuery, setSearchQuery] = useState(externalSearchQuery);
 
+  const normalize = (str) => 
+    (str || '')
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+
   const filtered = ACTIVITIES.filter((act) => {
     let matchesCategory = true;
     if (activeCategory === 'deportes') {
@@ -27,12 +34,17 @@ export default function SportsCatalog({ onSelectActivity, userAptoValid, externa
       matchesCategory = act.category === 'fitness';
     }
 
-    const q = searchQuery.toLowerCase();
-    const matchesSearch = act.name.toLowerCase().includes(q) ||
-                          act.venue.toLowerCase().includes(q) ||
-                          (act.description && act.description.toLowerCase().includes(q)) ||
-                          (act.category === 'cultura' && 'cultura'.includes(q)) ||
-                          act.levels.some(l => l.toLowerCase().includes(q));
+    const q = normalize(searchQuery);
+    if (!q) return matchesCategory;
+
+    const matchesSearch = 
+      normalize(act.name).includes(q) ||
+      normalize(act.venue).includes(q) ||
+      (act.description && normalize(act.description).includes(q)) ||
+      (act.tags && act.tags.some(t => normalize(t).includes(q))) ||
+      (act.category && normalize(act.category).includes(q)) ||
+      (act.levels && act.levels.some(l => normalize(l).includes(q)));
+
     return matchesCategory && matchesSearch;
   });
 
@@ -130,8 +142,8 @@ export default function SportsCatalog({ onSelectActivity, userAptoValid, externa
               >
                 {/* Discount Ribbon */}
                 {discountPct > 0 && (
-                  <div className="absolute top-0 right-0 bg-emerald-600 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-bl-xl shadow-sm">
-                    {discountPct}% OFF Débito Auto
+                  <div className="absolute top-0 right-0 bg-emerald-600 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-bl-xl shadow-sm whitespace-nowrap">
+                    {discountPct}% OFF Débito
                   </div>
                 )}
 

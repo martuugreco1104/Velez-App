@@ -101,6 +101,55 @@ export const FOOTBALL_DATA = {
     { pos: 13, team: "Riestra", logo: "/clubs/riestra.svg", pts: 12, pj: 14, gol: "10:14", dif: "-4", pg: 2, pe: 6, pp: 6, ultimas: ['D', 'E', 'D', 'E', 'E'], inPlayoffs: false },
     { pos: 14, team: "Central Córdoba", logo: "/clubs/central_cordoba.svg", pts: 10, pj: 14, gol: "11:23", dif: "-12", pg: 2, pe: 4, pp: 8, ultimas: ['D', 'D', 'E', 'E', 'E'], inPlayoffs: false },
     { pos: 15, team: "Talleres", logo: "/clubs/talleres.svg", pts: 9, pj: 14, gol: "13:22", dif: "-9", pg: 2, pe: 3, pp: 9, ultimas: ['D', 'D', 'E', 'D', 'D'], inPlayoffs: false }
+  ],
+  standingsGrupoB: [
+    { pos: 1, team: "Central", logo: "/clubs/central_cordoba.svg", pts: 28, pj: 14, gol: "22:11", dif: "+11", pg: 8, pe: 4, pp: 2, ultimas: ['V', 'V', 'V', 'E', 'V'], inPlayoffs: true },
+    { pos: 2, team: "Argentinos", logo: "/clubs/estudiantes.svg", pts: 28, pj: 14, gol: "18:11", dif: "+7", pg: 8, pe: 4, pp: 2, ultimas: ['V', 'V', 'E', 'V', 'D'], inPlayoffs: true },
+    { pos: 3, team: "Gimnasia", logo: "/clubs/gimnasia_mendoza.png", pts: 25, pj: 14, gol: "21:18", dif: "+3", pg: 7, pe: 4, pp: 3, ultimas: ['V', 'V', 'E', 'E', 'E'], inPlayoffs: true },
+    { pos: 4, team: "River", logo: "/clubs/river.svg", pts: 23, pj: 14, gol: "19:13", dif: "+6", pg: 7, pe: 2, pp: 5, ultimas: ['V', 'V', 'E', 'V', 'D'], inPlayoffs: true },
+    { pos: 5, team: "Belgrano", logo: "/clubs/talleres.svg", pts: 22, pj: 14, gol: "14:11", dif: "+3", pg: 6, pe: 4, pp: 4, ultimas: ['D', 'D', 'V', 'V', 'V'], inPlayoffs: true },
+    { pos: 6, team: "Barracas", logo: "/clubs/instituto.png", pts: 22, pj: 14, gol: "13:11", dif: "+2", pg: 6, pe: 4, pp: 4, ultimas: ['V', 'E', 'V', 'V', 'D'], inPlayoffs: true },
+    { pos: 7, team: "Sarmiento", logo: "/clubs/defensa.svg", pts: 21, pj: 14, gol: "22:21", dif: "+1", pg: 6, pe: 3, pp: 5, ultimas: ['D', 'E', 'E', 'V', 'D'], inPlayoffs: true },
+    { pos: 8, team: "Huracán", logo: "/clubs/huracan.svg", pts: 19, pj: 14, gol: "12:14", dif: "-2", pg: 5, pe: 4, pp: 5, ultimas: ['D', 'D', 'D', 'V', 'V'], inPlayoffs: true },
+    { pos: 9, team: "Independiente Riv.", logo: "/clubs/independiente.svg", pts: 19, pj: 14, gol: "17:22", dif: "-5", pg: 5, pe: 4, pp: 5, ultimas: ['D', 'E', 'D', 'E', 'V'], inPlayoffs: false },
+    { pos: 10, team: "Atl. Tucumán", logo: "/clubs/union.svg", pts: 17, pj: 14, gol: "13:13", dif: "0", pg: 4, pe: 5, pp: 5, ultimas: ['V', 'D', 'E', 'D', 'D'], inPlayoffs: false },
+    { pos: 11, team: "Banfield", logo: "/clubs/defensa.svg", pts: 14, pj: 14, gol: "15:20", dif: "-5", pg: 3, pe: 5, pp: 6, ultimas: ['E', 'D', 'V', 'E', 'E'], inPlayoffs: false },
+    { pos: 12, team: "Tigre", logo: "/clubs/san_lorenzo.svg", pts: 13, pj: 14, gol: "13:16", dif: "-3", pg: 3, pe: 4, pp: 7, ultimas: ['D', 'E', 'D', 'D', 'D'], inPlayoffs: false },
+    { pos: 13, team: "Racing", logo: "/clubs/racing.svg", pts: 12, pj: 14, gol: "14:21", dif: "-7", pg: 3, pe: 3, pp: 8, ultimas: ['D', 'E', 'D', 'V', 'V'], inPlayoffs: false },
+    { pos: 14, team: "Aldosivi", logo: "/clubs/defensa.svg", pts: 11, pj: 14, gol: "15:22", dif: "-7", pg: 3, pe: 2, pp: 9, ultimas: ['V', 'D', 'D', 'D', 'V'], inPlayoffs: false },
+    { pos: 15, team: "Estudiantes RC", logo: "/clubs/estudiantes.svg", pts: 9, pj: 14, gol: "9:19", dif: "-10", pg: 2, pe: 3, pp: 9, ultimas: ['D', 'V', 'D', 'D', 'D'], inPlayoffs: false }
+  ],
+  annualStandings: [
+    { pos: 1, team: "Boca Jrs.", logo: "/clubs/boca.svg", pts: 57, pj: 30, gol: "44:23", dif: "+21", pg: 15, pe: 12, pp: 3, ultimas: ['V', 'V', 'E', 'V', 'V'], copa: 'Libertadores' },
+    { pos: 2, team: "Argentinos Jrs.", logo: "/clubs/estudiantes.svg", pts: 57, pj: 30, gol: "35:24", dif: "+11", pg: 16, pe: 9, pp: 5, ultimas: ['V', 'V', 'E', 'V', 'D'], copa: 'Libertadores' },
+    { pos: 3, team: "Rosario Central", logo: "/clubs/central_cordoba.svg", pts: 56, pj: 30, gol: "42:27", dif: "+15", pg: 16, pe: 8, pp: 6, ultimas: ['V', 'V', 'V', 'E', 'V'], copa: 'Libertadores' },
+    { pos: 4, team: "Vélez Sarsfield", logo: "/clubs/velez.svg", pts: 55, pj: 30, gol: "41:25", dif: "+16", pg: 14, pe: 13, pp: 3, ultimas: ['V', 'V', 'D', 'E', 'V'], isCurrentTeam: true, copa: 'Libertadores' },
+    { pos: 5, team: "Independiente Riv.", logo: "/clubs/independiente.svg", pts: 53, pj: 30, gol: "46:37", dif: "+9", pg: 15, pe: 8, pp: 7, ultimas: ['D', 'E', 'D', 'E', 'V'], copa: 'Sudamericana' },
+    { pos: 6, team: "Instituto", logo: "/clubs/instituto.png", pts: 53, pj: 30, gol: "38:27", dif: "+11", pg: 16, pe: 5, pp: 9, ultimas: ['V', 'V', 'E', 'V', 'V'], copa: 'Sudamericana' },
+    { pos: 7, team: "River Plate", logo: "/clubs/river.svg", pts: 52, pj: 30, gol: "41:25", dif: "+16", pg: 16, pe: 4, pp: 10, ultimas: ['V', 'V', 'E', 'V', 'D'], copa: 'Sudamericana' },
+    { pos: 8, team: "Gimnasia (LP)", logo: "/clubs/gimnasia_mendoza.png", pts: 51, pj: 30, gol: "40:37", dif: "+3", pg: 15, pe: 6, pp: 9, ultimas: ['V', 'V', 'E', 'E', 'E'], copa: 'Sudamericana' },
+    { pos: 9, team: "Lanús", logo: "/clubs/lanus.svg", pts: 48, pj: 30, gol: "35:25", dif: "+10", pg: 13, pe: 9, pp: 8, ultimas: ['E', 'V', 'V', 'E', 'V'], copa: 'Sudamericana' },
+    { pos: 10, team: "Belgrano", logo: "/clubs/talleres.svg", pts: 48, pj: 30, gol: "31:24", dif: "+7", pg: 13, pe: 9, pp: 8, ultimas: ['D', 'D', 'V', 'V', 'V'], copa: 'Sudamericana' },
+    { pos: 11, team: "Defensa y Justicia", logo: "/clubs/defensa.svg", pts: 46, pj: 30, gol: "38:34", dif: "+4", pg: 12, pe: 10, pp: 8, ultimas: ['V', 'D', 'V', 'V', 'E'] },
+    { pos: 12, team: "Estudiantes (LP)", logo: "/clubs/estudiantes.svg", pts: 45, pj: 30, gol: "36:25", dif: "+11", pg: 13, pe: 6, pp: 11, ultimas: ['D', 'D', 'E', 'V', 'D'] },
+    { pos: 13, team: "Independiente", logo: "/clubs/independiente.svg", pts: 43, pj: 30, gol: "36:34", dif: "+2", pg: 11, pe: 10, pp: 9, ultimas: ['D', 'E', 'E', 'D', 'V'] },
+    { pos: 14, team: "Barracas Central", logo: "/clubs/instituto.png", pts: 43, pj: 30, gol: "28:26", dif: "+2", pg: 11, pe: 10, pp: 9, ultimas: ['V', 'E', 'V', 'V', 'D'] },
+    { pos: 15, team: "Huracán", logo: "/clubs/huracan.svg", pts: 41, pj: 30, gol: "29:27", dif: "+2", pg: 10, pe: 11, pp: 9, ultimas: ['D', 'D', 'D', 'V', 'V'] },
+    { pos: 16, team: "San Lorenzo", logo: "/clubs/san_lorenzo.svg", pts: 40, pj: 30, gol: "21:26", dif: "-5", pg: 10, pe: 10, pp: 10, ultimas: ['E', 'V', 'V', 'D', 'D'] },
+    { pos: 17, team: "Sarmiento", logo: "/clubs/defensa.svg", pts: 40, pj: 30, gol: "35:41", dif: "-6", pg: 12, pe: 4, pp: 14, ultimas: ['D', 'E', 'E', 'V', 'D'] },
+    { pos: 18, team: "Gimnasia (M)", logo: "/clubs/gimnasia_mendoza.png", pts: 39, pj: 30, gol: "30:37", dif: "-7", pg: 11, pe: 6, pp: 13, ultimas: ['D', 'D', 'V', 'D', 'E'] },
+    { pos: 19, team: "Unión", logo: "/clubs/union.svg", pts: 38, pj: 30, gol: "45:43", dif: "+2", pg: 10, pe: 8, pp: 12, ultimas: ['V', 'E', 'D', 'D', 'D'] },
+    { pos: 20, team: "Newell's", logo: "/clubs/newells.svg", pts: 36, pj: 30, gol: "28:37", dif: "-9", pg: 8, pe: 12, pp: 10, ultimas: ['E', 'V', 'D', 'E', 'V'] },
+    { pos: 21, team: "Talleres (C)", logo: "/clubs/talleres.svg", pts: 35, pj: 30, gol: "30:35", dif: "-5", pg: 9, pe: 8, pp: 13, ultimas: ['D', 'D', 'E', 'D', 'D'] },
+    { pos: 22, team: "Racing Club", logo: "/clubs/racing.svg", pts: 33, pj: 30, gol: "31:36", dif: "-5", pg: 8, pe: 9, pp: 13, ultimas: ['D', 'E', 'D', 'V', 'V'] },
+    { pos: 23, team: "Tigre", logo: "/clubs/san_lorenzo.svg", pts: 33, pj: 30, gol: "31:31", dif: "0", pg: 7, pe: 12, pp: 11, ultimas: ['D', 'E', 'D', 'D', 'D'] },
+    { pos: 24, team: "Banfield", logo: "/clubs/defensa.svg", pts: 32, pj: 30, gol: "32:39", dif: "-7", pg: 8, pe: 8, pp: 14, ultimas: ['E', 'D', 'V', 'E', 'E'] },
+    { pos: 25, team: "Atl. Tucumán", logo: "/clubs/union.svg", pts: 31, pj: 30, gol: "28:33", dif: "-5", pg: 7, pe: 10, pp: 13, ultimas: ['V', 'D', 'E', 'D', 'D'] },
+    { pos: 26, team: "Platense", logo: "/clubs/platense.svg", pts: 30, pj: 30, gol: "24:35", dif: "-11", pg: 6, pe: 12, pp: 12, ultimas: ['V', 'D', 'E', 'E', 'D'] },
+    { pos: 27, team: "Central Córdoba (SdE)", logo: "/clubs/central_cordoba.svg", pts: 26, pj: 30, gol: "22:44", dif: "-22", pg: 6, pe: 8, pp: 16, ultimas: ['D', 'D', 'E', 'E', 'E'] },
+    { pos: 28, team: "Deportivo Riestra", logo: "/clubs/riestra.svg", pts: 23, pj: 30, gol: "15:26", dif: "-11", pg: 3, pe: 14, pp: 13, ultimas: ['D', 'E', 'D', 'E', 'E'] },
+    { pos: 29, team: "Aldosivi", logo: "/clubs/defensa.svg", pts: 19, pj: 30, gol: "21:41", dif: "-20", pg: 3, pe: 10, pp: 17, ultimas: ['V', 'D', 'D', 'D', 'V'] },
+    { pos: 30, team: "Estudiantes (RC)", logo: "/clubs/estudiantes.svg", pts: 14, pj: 30, gol: "14:43", dif: "-29", pg: 3, pe: 5, pp: 22, ultimas: ['D', 'V', 'D', 'D', 'D'] }
   ]
 };
 
@@ -138,32 +187,74 @@ export const STANDINGS = FOOTBALL_DATA.standings.map(s => ({
   logo: s.logo
 }));
 
+export const STANDINGS_GRUPO_B = FOOTBALL_DATA.standingsGrupoB.map(s => ({
+  pos: s.pos,
+  team: s.team,
+  pj: s.pj,
+  g: s.pg,
+  e: s.pe,
+  p: s.pp,
+  gf: parseInt(s.gol.split(':')[0]) || 0,
+  gc: parseInt(s.gol.split(':')[1]) || 0,
+  gol: s.gol,
+  dif: s.dif,
+  pts: s.pts,
+  ultimas: s.ultimas,
+  inPlayoffs: s.inPlayoffs,
+  isVelez: false,
+  shield: s.logo,
+  logo: s.logo
+}));
+
+export const ANNUAL_STANDINGS = FOOTBALL_DATA.annualStandings.map(s => ({
+  pos: s.pos,
+  team: s.team,
+  pj: s.pj,
+  g: s.pg,
+  e: s.pe,
+  p: s.pp,
+  gf: parseInt(s.gol.split(':')[0]) || 0,
+  gc: parseInt(s.gol.split(':')[1]) || 0,
+  gol: s.gol,
+  dif: s.dif,
+  pts: s.pts,
+  ultimas: s.ultimas,
+  copa: s.copa,
+  isVelez: !!s.isCurrentTeam,
+  shield: s.logo,
+  logo: s.logo
+}));
+
+export const PAST_FIXTURES = FOOTBALL_DATA.recentMatches.map(m => ({
+  id: `m_${m.round}`,
+  fechaNro: m.round,
+  torneo: FOOTBALL_DATA.currentTournament,
+  fecha: m.date,
+  hora: 'Finalizado',
+  local: m.condition === 'Local' ? 'Vélez Sarsfield' : m.opponent,
+  visitante: m.condition === 'Local' ? m.opponent : 'Vélez Sarsfield',
+  opponentLogo: m.opponentLogo,
+  golesLocal: m.condition === 'Local' ? m.velezScore : m.opponentScore,
+  golesVisitante: m.condition === 'Local' ? m.opponentScore : m.velezScore,
+  estado: 'finalizado',
+  resultadoTexto: `${m.result} ${m.score}`,
+  scorers: m.scorers
+}));
+
+export const UPCOMING_FIXTURES = FOOTBALL_DATA.upcomingMatches.map(m => ({
+  id: `m_${m.round}`,
+  fechaNro: m.round,
+  torneo: FOOTBALL_DATA.currentTournament,
+  fecha: m.date,
+  hora: m.date.includes('-') ? m.date.split('-')[1].trim() : '19:15 hs',
+  local: m.condition.includes('Local') ? 'Vélez Sarsfield' : m.opponent,
+  visitante: m.condition.includes('Local') ? m.opponent : 'Vélez Sarsfield',
+  opponentLogo: m.opponentLogo,
+  estado: m.status === 'Próximo partido' ? 'proximo' : 'confirmar',
+  resultadoTexto: m.status
+}));
+
 export const FIXTURES = [
-  ...FOOTBALL_DATA.recentMatches.map(m => ({
-    id: `m_${m.round}`,
-    fechaNro: m.round,
-    torneo: FOOTBALL_DATA.currentTournament,
-    fecha: m.date,
-    hora: 'Finalizado',
-    local: m.condition === 'Local' ? 'Vélez Sarsfield' : m.opponent,
-    visitante: m.condition === 'Local' ? m.opponent : 'Vélez Sarsfield',
-    opponentLogo: m.opponentLogo,
-    golesLocal: m.condition === 'Local' ? m.velezScore : m.opponentScore,
-    golesVisitante: m.condition === 'Local' ? m.opponentScore : m.velezScore,
-    estado: 'finalizado',
-    resultadoTexto: `${m.result} ${m.score}`,
-    scorers: m.scorers
-  })),
-  ...FOOTBALL_DATA.upcomingMatches.map(m => ({
-    id: `m_${m.round}`,
-    fechaNro: m.round,
-    torneo: FOOTBALL_DATA.currentTournament,
-    fecha: m.date,
-    hora: m.date.includes('-') ? m.date.split('-')[1].trim() : '19:15 hs',
-    local: m.condition.includes('Local') ? 'Vélez Sarsfield' : m.opponent,
-    visitante: m.condition.includes('Local') ? m.opponent : 'Vélez Sarsfield',
-    opponentLogo: m.opponentLogo,
-    estado: m.status === 'Próximo partido' ? 'proximo' : 'confirmar',
-    resultadoTexto: m.status
-  }))
+  ...UPCOMING_FIXTURES,
+  ...PAST_FIXTURES
 ];

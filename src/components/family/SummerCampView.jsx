@@ -9,7 +9,12 @@ import {
   Sparkles,
   MapPin,
   Clock,
-  ArrowRight
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  HeartPulse,
+  UserCheck
 } from 'lucide-react';
 
 const SHIFTS = [
@@ -22,6 +27,7 @@ export default function SummerCampView({ member, onBack, onConfirm, hasSiblingDi
   const [selectedShift, setSelectedShift] = useState('completo');
   const [lunchService, setLunchService] = useState('comedor'); // 'comedor' | 'vianda'
   const [agreedTerms, setAgreedTerms] = useState(false);
+  const [isRulesOpen, setIsRulesOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -276,7 +282,77 @@ export default function SummerCampView({ member, onBack, onConfirm, hasSiblingDi
         </div>
       </div>
 
-      {/* 8. Términos y Condiciones (Área táctil accesible min 44px) */}
+      {/* 8. Normas de Convivencia y Reglamento Verano CAVS (Acordeón Desplegable) */}
+      <div className="rounded-2xl border border-blue-200 bg-white overflow-hidden shadow-xs">
+        <button
+          type="button"
+          onClick={() => setIsRulesOpen(!isRulesOpen)}
+          className="w-full p-4 flex items-center justify-between text-left hover:bg-blue-50/50 transition-colors"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#0055A4] shrink-0">
+              <FileText className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black text-slate-900">Normas de Convivencia y Reglamento</span>
+                <span className="text-[9px] font-black uppercase tracking-wider text-[#0055A4] bg-blue-100/70 px-2 py-0.5 rounded-full">
+                  Lectura Obligatoria
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                Apto médico, horarios de ingreso/egreso y política de viandas
+              </p>
+            </div>
+          </div>
+          {isRulesOpen ? (
+            <ChevronUp className="w-4 h-4 text-slate-400 shrink-0" />
+          ) : (
+            <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
+          )}
+        </button>
+
+        {isRulesOpen && (
+          <div className="p-4 pt-1 border-t border-blue-100 bg-slate-50/60 space-y-3.5 text-xs text-slate-600 animate-fadeIn">
+            
+            {/* Norma 1 */}
+            <div className="flex items-start gap-2.5">
+              <HeartPulse className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-slate-900 block text-xs">1. Requisitos de Apto Médico y Buco-Dental Obligatorio</strong>
+                <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                  Antes del primer día de actividades, es condición excluyente contar con el Certificado Médico Oficial con firma y matrícula (MN/MP) y el apto buco-dental para el ingreso al natatorio del Polideportivo. Se puede cargar digitalmente desde la sección de Perfil.
+                </p>
+              </div>
+            </div>
+
+            {/* Norma 2 */}
+            <div className="flex items-start gap-2.5">
+              <UserCheck className="w-4 h-4 text-[#0055A4] shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-slate-900 block text-xs">2. Protocolo de Horarios de Ingreso y Retiro de Menores</strong>
+                <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                  Turno Mañana: ingreso de 08:45 a 09:15 h / salida 13:00 h puntual. Turno Tarde: ingreso 13:45 a 14:15 h / salida 18:00 h. El retiro sólo podrá ser efectuado por adultos autorizados previamente con DNI registrado en la Oficina de Socios y molinetes del club.
+                </p>
+              </div>
+            </div>
+
+            {/* Norma 3 */}
+            <div className="flex items-start gap-2.5">
+              <Utensils className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-slate-900 block text-xs">3. Política de Viandas Refrigeradas y Menú Institucional</strong>
+                <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                  Los niños con modalidad Vianda Propia deben ingresar su lunchera térmica rotulada al inicio de la jornada para ser alojada en heladeras bromatológicas supervisadas. Los inscriptos a Comedor CAVS reciben menú supervisado por el área de nutrición del club.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        )}
+      </div>
+
+      {/* 9. Términos y Condiciones (Área táctil accesible min 44px) */}
       <label className="flex items-start gap-3 p-3.5 rounded-2xl bg-white border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors min-h-[44px]">
         <input 
           type="checkbox"

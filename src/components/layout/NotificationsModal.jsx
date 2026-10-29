@@ -56,6 +56,25 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate, onClea
     }
   };
 
+  const handleNotificationClick = (item) => {
+    // Apagar estado no leída
+    setNotifications(prev => prev.map(n => n.id === item.id ? { ...n, read: true } : n));
+    
+    // Redirigir según el tipo
+    if (onNavigate) {
+      if (item.type === 'quota') {
+        onNavigate('home-quota');
+      } else if (item.type === 'match') {
+        onNavigate('fixture');
+      } else if (item.type === 'camp') {
+        onNavigate('grupo-familiar');
+      } else {
+        onNavigate(item.type);
+      }
+    }
+    onClose();
+  };
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn font-sans"
@@ -109,32 +128,39 @@ export default function NotificationsModal({ isOpen, onClose, onNavigate, onClea
             return (
               <div
                 key={item.id}
-                className={`p-3 rounded-2xl border transition-all text-xs ${
+                onClick={() => handleNotificationClick(item)}
+                className={`p-3.5 rounded-2xl border transition-all text-xs cursor-pointer group hover:scale-[1.01] active:scale-[0.99] ${
                   item.read 
-                    ? 'bg-white border-slate-100 text-slate-600' 
-                    : 'bg-blue-50/50 border-blue-200 text-slate-800 shadow-sm'
+                    ? 'bg-white border-slate-100 text-slate-600 hover:bg-slate-50 hover:border-slate-300' 
+                    : 'bg-blue-50/70 border-blue-200 text-slate-800 shadow-sm hover:bg-blue-100/70 hover:border-[#0055A4]/40'
                 }`}
               >
                 <div className="flex items-start gap-2.5">
-                  <div className={`p-2 rounded-xl bg-white shadow-sm border border-slate-100 shrink-0 ${item.iconColor}`}>
+                  <div className={`p-2 rounded-xl bg-white shadow-sm border border-slate-100 shrink-0 ${item.iconColor} group-hover:scale-105 transition-transform`}>
                     <Icon className="w-4 h-4" />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-0.5">
-                      <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#0055A4] bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200/60">
-                        {item.category}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#0055A4] bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200/60">
+                          {item.category}
+                        </span>
+                        {!item.read && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#0055A4]" />
+                        )}
+                      </div>
                       <span className="text-[9px] text-slate-400 font-medium ml-1">
                         {item.time}
                       </span>
                     </div>
-                    <h4 className="font-bold text-slate-900 leading-tight">
+                    <h4 className="font-bold text-slate-900 leading-tight group-hover:text-[#0055A4] transition-colors">
                       {item.title}
                     </h4>
                     <p className="text-[11px] text-slate-500 mt-1 leading-snug">
                       {item.desc}
                     </p>
                   </div>
+                  <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-[#0055A4] group-hover:translate-x-0.5 transition-all shrink-0 self-center" />
                 </div>
               </div>
             );

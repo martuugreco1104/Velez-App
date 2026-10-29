@@ -143,13 +143,37 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
 
   const handleStartPurchase = () => {
     if (cartItems.length === 0) return;
+
+    // Generar registro en velez_orders
+    const newOrder = {
+      id: `ORD-${Date.now().toString().slice(-6)}`,
+      date: new Date().toLocaleDateString('es-AR'),
+      items: [...cartItems],
+      total: totalCart,
+      shippingMethod,
+      status: 'Abonado - Listo para retirar en Tienda Oficial',
+      pickupLocation: 'Sede Central: Av. Juan B. Justo 9200 (Liniers)'
+    };
+
+    try {
+      const prevOrders = JSON.parse(localStorage.getItem('velez_orders') || '[]');
+      localStorage.setItem('velez_orders', JSON.stringify([newOrder, ...prevOrders]));
+    } catch (e) {
+      console.error("Error guardando en velez_orders:", e);
+    }
+
+    const itemsSummary = cartItems.map(i => i.name).join(', ');
+
+    // Limpiar carrito
+    setCartItems([]);
+
     if (onOpenPay) {
       onOpenPay(
         totalCart, 
-        `Tienda Oficial CAVS (${cartItems.length} artículo(s) • ${shippingMethod === 'pickup' ? 'Retiro en Sede' : 'Envío a Domicilio'})`
+        `Tienda Oficial CAVS: ${itemsSummary} (${shippingMethod === 'pickup' ? 'Retiro en Sede' : 'Envío a Domicilio'})`
       );
     } else if (showToast) {
-      showToast(`¡Compra de $${totalCart.toLocaleString('es-AR')} iniciada con éxito!`);
+      showToast(`¡Compra de $${totalCart.toLocaleString('es-AR')} abonada con éxito!`);
     }
     setIsCartOpen(false);
   };
@@ -304,15 +328,15 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleAddToCart(true)}
-              className="h-12 min-h-[48px] px-4 rounded-xl bg-white hover:bg-slate-50 text-[#0055A4] border border-[#0055A4]/40 font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all active:scale-[0.98] leading-none"
+              className="h-12 min-h-[48px] px-4 rounded-xl bg-white hover:bg-slate-50 text-[#0055A4] border border-[#0055A4]/40 font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all active:scale-[0.98] leading-none whitespace-nowrap shrink-0"
             >
               <ShoppingBag className="w-4 h-4 shrink-0 text-[#0055A4]" />
-              <span>Agregar al Carrito</span>
+              <span>Agregar</span>
             </button>
 
             <button
               onClick={handleBuyNow}
-              className="h-12 min-h-[48px] px-5 rounded-xl bg-[#0055A4] hover:bg-[#004080] text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm leading-none"
+              className="h-12 min-h-[48px] px-5 rounded-xl bg-[#0055A4] hover:bg-[#004080] text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm leading-none whitespace-nowrap shrink-0"
             >
               <span>Comprar ahora</span>
               <ArrowRight className="w-4 h-4 shrink-0 text-white" />
@@ -465,10 +489,10 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
                       }
                       setIsCartOpen(true);
                     }}
-                    className="mt-2.5 w-full h-10 rounded-xl text-xs font-bold transition-all inline-flex items-center justify-center gap-1.5 bg-[#0055A4] hover:bg-[#004080] text-white leading-none active:scale-[0.98] shadow-xs"
+                    className="mt-2.5 w-full h-10 rounded-xl text-xs font-bold transition-all inline-flex items-center justify-center gap-1.5 bg-[#0055A4] hover:bg-[#004080] text-white leading-none active:scale-[0.98] shadow-xs whitespace-nowrap"
                   >
                     <ShoppingBag className="w-3.5 h-3.5 shrink-0 text-white" />
-                    <span>Agregar al Carrito</span>
+                    <span>Agregar</span>
                   </button>
                 </div>
               </div>
@@ -497,13 +521,14 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
           onClick={() => setIsCartOpen(false)}
         />
 
-        {/* Cart Container */}
-        <div className="relative w-full max-w-md md:max-w-xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[92vh] z-10 overflow-hidden font-sans">
+        {/* Cart Container con scroll ergonómico desacoplado */}
+        <div className="relative w-full max-w-md md:max-w-xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col h-full max-h-[90vh] z-10 overflow-hidden font-sans">
           
-          {/* Header Superior Azul Institucional */}
-          <div className="bg-[#0055A4] text-white px-5 py-4 flex items-center justify-between shrink-0">
-            <h3 className="text-lg font-bold tracking-tight text-white">
-              Carrito de Compras
+          {/* 1. Header Fijo Superior */}
+          <div className="p-4 border-b border-blue-900 bg-[#0055A4] text-white flex items-center justify-between shrink-0">
+            <h3 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
+              <ShoppingBag className="w-5 h-5 text-sky-200" />
+              <span>Carrito de Compras ({cartItems.length})</span>
             </h3>
             <button
               onClick={() => setIsCartOpen(false)}
@@ -514,8 +539,8 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
             </button>
           </div>
 
-          {/* Scrollable Content */}
-          <div className="p-5 overflow-y-auto space-y-4">
+          {/* 2. Cuerpo Central con Scroll Nativo Fluido */}
+          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-3">
             
             {cartItems.length === 0 ? (
               <div className="py-12 text-center space-y-3">
@@ -635,9 +660,6 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
                       {isCalculatingShipping ? '...' : 'CALCULAR'}
                     </button>
                   </div>
-                  <div className="text-[11px] text-[#0055A4] hover:underline cursor-pointer">
-                    No sé mi código postal
-                  </div>
 
                   {/* Opciones de Entrega */}
                   <div className="space-y-2 pt-1">
@@ -695,7 +717,7 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
                   </div>
                 </div>
 
-                {/* Datos del Socio Precargados por la App */}
+                {/* Datos de Socia Precargados */}
                 <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="font-extrabold text-[#001D4A] uppercase text-[10px] tracking-wider flex items-center gap-1">
@@ -717,63 +739,46 @@ export default function ClubShop({ onAddToCart, user, onOpenPay, showToast, onPr
                     <span>Av. Juan B. Justo 8840, Liniers, CABA (CP 1408)</span>
                   </div>
                 </div>
-
-                {/* Resumen de Totales */}
-                <div className="pt-2 border-t border-slate-200 space-y-1.5">
-                  <div className="flex justify-between text-xs text-slate-800 font-bold">
-                    <span>Subtotal (sin envío):</span>
-                    <span className="font-mono text-sm">${subtotalCart.toLocaleString('es-AR')}</span>
-                  </div>
-                  <div className="flex justify-between text-[11px] text-slate-400">
-                    <span>Precio sin impuestos:</span>
-                    <span className="font-mono">${subtotalWithoutTax.toLocaleString('es-AR')}</span>
-                  </div>
-                  <div className="flex justify-between text-xs text-slate-600 font-medium">
-                    <span>Envío:</span>
-                    <span className="font-mono">
-                      {shippingMethod === 'pickup' 
-                        ? <span className="text-[#0A7E43] font-bold">¡Gratis! (Retiro en Sede)</span> 
-                        : isDeliveryOverFreeThreshold 
-                          ? <span className="text-[#0A7E43] font-bold">¡Gratis!</span> 
-                          : '$4.800'}
-                    </span>
-                  </div>
-
-                  <div className="pt-2 border-t border-slate-200 flex items-baseline justify-between">
-                    <span className="text-xl font-black text-slate-900 tracking-tight">Total:</span>
-                    <div className="text-right">
-                      <span className="text-2xl font-black text-[#0055A4] font-mono">
-                        ${totalCart.toLocaleString('es-AR')}
-                      </span>
-                      <span className="text-[10px] text-slate-500 block font-medium">
-                        O hasta 6 cuotas de ${(Math.round(totalCart / 6)).toLocaleString('es-AR')}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* BOTÓN INICIAR COMPRA */}
-                <div className="pt-2 space-y-2">
-                  <button
-                    onClick={handleStartPurchase}
-                    className="w-full h-12 bg-[#0055A4] hover:bg-[#004080] text-white font-bold text-sm rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm leading-none"
-                  >
-                    <span>INICIAR COMPRA</span>
-                  </button>
-
-                  <div className="text-center">
-                    <button
-                      onClick={() => setIsCartOpen(false)}
-                      className="text-xs font-semibold text-[#0055A4] hover:text-[#001D4A] inline-flex items-center gap-1 py-1.5 transition-colors"
-                    >
-                      Ver más productos
-                    </button>
-                  </div>
-                </div>
               </>
             )}
 
           </div>
+
+          {/* 3. Footer Fijo con Total y Botón de Pago */}
+          {cartItems.length > 0 && (
+            <div className="p-4 border-t border-slate-200 shrink-0 bg-white shadow-lg space-y-2">
+              <div className="flex justify-between items-baseline">
+                <div>
+                  <span className="text-xs text-slate-500 block">Total a Pagar (con 10% OFF Socia):</span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    {shippingMethod === 'pickup' ? 'Retiro en Sede sin cargo' : isDeliveryOverFreeThreshold ? 'Envío gratis bonificado' : 'Incluye $4.800 de envío'}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-2xl font-black text-[#0055A4] font-mono">
+                    ${totalCart.toLocaleString('es-AR')}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={handleStartPurchase}
+                className="w-full h-12 bg-[#0055A4] hover:bg-[#004080] text-white font-bold text-sm rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm leading-none"
+              >
+                <span>Confirmar Pago de Camiseta (${totalCart.toLocaleString('es-AR')})</span>
+                <ArrowRight className="w-4 h-4 text-white" />
+              </button>
+
+              <div className="text-center pt-0.5">
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+                >
+                  Continuar explorando tienda
+                </button>
+              </div>
+            </div>
+          )}
 
         </div>
       </div>
