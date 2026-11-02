@@ -82,7 +82,7 @@ export const nextMatchData = {
   torneo: "Torneo Clausura 2026",
   fechaNro: "Fecha 16",
   fecha: "Domingo 8 de Noviembre",
-  hora: "17:00 hs",
+  hora: "14:00 hs",
   estadio: "Estadio 15 de Abril (Santa Fe)",
   ubicacion: "Santa Fe",
   tv: "TNT Sports / ESPN Premium",

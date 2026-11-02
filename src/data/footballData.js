@@ -19,7 +19,10 @@ const L = {
   centralCordoba: "/clubs/central_cordoba.svg",
   river: "/clubs/river.svg",
   huracan: "/clubs/huracan.svg",
-  racing: "/clubs/racing.svg"
+  racing: "/clubs/racing.svg",
+  tigre: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Escudo_del_Club_Atl%C3%A9tico_Tigre.svg",
+  cerro: "https://upload.wikimedia.org/wikipedia/commons/4/47/Cerro_porte%C3%B1o_logo.svg",
+  argentinos: "https://upload.wikimedia.org/wikipedia/commons/4/45/Escudo_de_la_Asociaci%C3%B3n_Atl%C3%A9tica_Argentinos_Juniors.svg"
 };
 
 export const FOOTBALL_DATA = {
@@ -30,36 +33,95 @@ export const FOOTBALL_DATA = {
     homeTeam: { name: "Unión de Santa Fe", shortName: "UNIÓN (SF)", condition: "LOCAL", logo: L.union },
     awayTeam: { name: "Vélez Sarsfield", shortName: "VÉLEZ", condition: "VISITANTE", logo: L.velez },
     dateDisplay: "Domingo 8 de Noviembre",
-    timeDisplay: "17:00 hs",
+    timeDisplay: "14:00 hs",
     stadium: "Estadio 15 de Abril (Santa Fe)",
     broadcast: "TNT Sports / ESPN Premium",
     accessStatus: "Partido de Visitante • No habilitado para público visitante"
   },
   recentMatches: [
     {
-      round: "Fecha 15", date: "31/10/2026", opponent: "San Lorenzo", opponentLogo: L.sanLorenzo,
+      round: "Fecha 15", date: "31/10", opponent: "San Lorenzo", opponentLogo: L.sanLorenzo,
       condition: "Local", result: "Empate", score: "2 - 2", velezScore: 2, opponentScore: 2,
-      scorers: "Policella, Pellegrini (VÉL) / Cuello, Auzmendi (SLO)"
+      scorers: "Policella, Pellegrini (VÉL)"
     },
     {
-      round: "Fecha 14", date: "25/10/2026", opponent: "Central Córdoba (SdE)", opponentLogo: L.centralCordoba,
+      round: "Fecha 14", date: "25/10", opponent: "Central Córdoba (SdE)", opponentLogo: L.centralCordoba,
       condition: "Visitante", result: "Victoria", score: "0 - 5", velezScore: 5, opponentScore: 0,
       scorers: "Ronaldo Martínez (x3), Pellegrini, Robertone"
     },
     {
-      round: "Fecha 13", date: "17/10/2026", opponent: "River Plate", opponentLogo: L.river,
-      condition: "Local", result: "Victoria", score: "1 - 0", velezScore: 1, opponentScore: 0,
-      scorers: "Braian Romero"
+      round: "Fecha 13", date: "17/10", opponent: "Gimnasia (M)", opponentLogo: L.gimnasiaM,
+      condition: "Local", result: "Victoria", score: "1 - 0", velezScore: 1, opponentScore: 0
+    },
+    {
+      round: "Fecha 12", date: "12/10", opponent: "Lanús", opponentLogo: L.lanus,
+      condition: "Visitante", result: "Derrota", score: "2 - 0", velezScore: 0, opponentScore: 2
+    },
+    {
+      round: "Fecha 11", date: "05/10", opponent: "Platense", opponentLogo: L.platense,
+      condition: "Local", result: "Empate", score: "2 - 2", velezScore: 2, opponentScore: 2
+    },
+    {
+      round: "Fecha 10", date: "26/09", opponent: "River Plate", opponentLogo: L.river,
+      condition: "Visitante", result: "Derrota", score: "3 - 2", velezScore: 2, opponentScore: 3
+    },
+    {
+      round: "Fecha 9", date: "20/09", opponent: "Tigre", opponentLogo: L.tigre,
+      condition: "Local", result: "Victoria", score: "3 - 2", velezScore: 3, opponentScore: 2
+    },
+    {
+      round: "Fecha 8", date: "11/09", opponent: "Newell's", opponentLogo: L.newells,
+      condition: "Visitante", result: "Empate", score: "1 - 1", velezScore: 1, opponentScore: 1
+    },
+    {
+      round: "Fecha 7", date: "05/09", opponent: "Estudiantes", opponentLogo: L.estudiantes,
+      condition: "Local", result: "Victoria", score: "1 - 0", velezScore: 1, opponentScore: 0
+    },
+    {
+      round: "Fecha 6", date: "02/09", opponent: "Boca Jrs.", opponentLogo: L.boca,
+      condition: "Local", result: "Empate", score: "0 - 0", velezScore: 0, opponentScore: 0
+    },
+    {
+      round: "Fecha 5", date: "29/08", opponent: "Riestra", opponentLogo: L.riestra,
+      condition: "Visitante", result: "Empate", score: "1 - 1", velezScore: 1, opponentScore: 1
+    },
+    {
+      round: "Fecha 4", date: "23/08", opponent: "River Plate", opponentLogo: L.river,
+      condition: "Visitante", result: "Empate", score: "2 - 2", velezScore: 2, opponentScore: 2
+    },
+    {
+      round: "Fecha 3", date: "17/08", opponent: "Defensa y Justicia", opponentLogo: L.defensa,
+      condition: "Local", result: "Empate", score: "1 - 1", velezScore: 1, opponentScore: 1
+    },
+    {
+      round: "Fecha 2", date: "08/08", opponent: "Boca Jrs.", opponentLogo: L.boca,
+      condition: "Visitante", result: "Empate", score: "1 - 1", velezScore: 1, opponentScore: 1
+    },
+    {
+      round: "Fecha 1", date: "03/08", opponent: "Independiente", opponentLogo: L.independiente,
+      condition: "Local", result: "Victoria", score: "1 - 0", velezScore: 1, opponentScore: 0
+    },
+    {
+      round: "Torneo 2026", date: "30/07", opponent: "Talleres (C)", opponentLogo: L.talleres,
+      condition: "Visitante", result: "Victoria", score: "1 - 3", velezScore: 3, opponentScore: 1
+    },
+    {
+      round: "Torneo 2026", date: "24/07", opponent: "Instituto", opponentLogo: L.instituto,
+      condition: "Local", result: "Victoria", score: "1 - 0", velezScore: 1, opponentScore: 0
+    },
+    {
+      round: "Copa Internacional", date: "16/07", opponent: "Cerro Porteño", opponentLogo: L.cerro,
+      condition: "Local", result: "Victoria", score: "1 - 0", velezScore: 1, opponentScore: 0
+    },
+    {
+      round: "Torneo 2026", date: "11/07", opponent: "Argentinos Jrs.", opponentLogo: L.argentinos,
+      condition: "Visitante", result: "Victoria", score: "0 - 1", velezScore: 1, opponentScore: 0
     }
   ],
   upcomingMatches: [
     {
-      round: "Fecha 16", date: "Dom 08/11 - 17:00 hs", opponent: "Unión de Santa Fe", opponentLogo: L.union,
+      round: "Fecha 16", date: "Dom 08/11 - 14:00 hs", opponent: "Unión de Santa Fe", opponentLogo: L.union,
       condition: "Visitante (Estadio 15 de Abril)", status: "Próximo partido"
-    },
-    {
-      round: "Fecha 17", date: "Sáb 14/11 - 21:00 hs", opponent: "Talleres (C)", opponentLogo: L.talleres,
-      condition: "Local (Amalfitani)", status: "A confirmar"
     }
   ],
 
@@ -179,8 +241,8 @@ export const STANDINGS = FOOTBALL_DATA.standings.map(mapStanding);
 export const STANDINGS_GRUPO_B = FOOTBALL_DATA.standingsGrupoB.map(mapStanding);
 export const ANNUAL_STANDINGS = FOOTBALL_DATA.annualStandings.map(mapStanding);
 
-export const PAST_FIXTURES = FOOTBALL_DATA.recentMatches.map(m => ({
-  id: `m_${m.round}`,
+export const PAST_FIXTURES = FOOTBALL_DATA.recentMatches.map((m, idx) => ({
+  id: `m_${m.round}_${m.date}_${idx}`,
   fechaNro: m.round,
   torneo: FOOTBALL_DATA.currentTournament,
   fecha: m.date,
