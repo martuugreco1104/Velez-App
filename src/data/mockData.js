@@ -76,19 +76,19 @@ export const quotaStates = {
 };
 
 export const nextMatchData = {
-  rival: "San Lorenzo",
-  rivalShort: "SLO",
-  rivalShield: "/clubs/san_lorenzo.svg",
+  rival: "Unión de Santa Fe",
+  rivalShort: "Unión",
+  rivalShield: "/clubs/union.svg",
   torneo: "Torneo Clausura 2026",
-  fechaNro: "Fecha 15",
-  fecha: "Sábado 31 de Octubre",
-  hora: "19:15 hs",
-  estadio: "Estadio José Amalfitani",
-  ubicacion: "Av. Juan B. Justo 9200, Liniers",
+  fechaNro: "Fecha 16",
+  fecha: "Domingo 8 de Noviembre",
+  hora: "17:00 hs",
+  estadio: "Estadio 15 de Abril (Santa Fe)",
+  ubicacion: "Santa Fe",
   tv: "TNT Sports / ESPN Premium",
-  plateaDisponible: "Platea Norte Baja / Alta y Popular",
-  precioDesde: 12000,
-  esLocal: true
+  plateaDisponible: "No habilitado para público visitante",
+  precioDesde: 0,
+  esLocal: false
 };
 
 export const shopProducts = [

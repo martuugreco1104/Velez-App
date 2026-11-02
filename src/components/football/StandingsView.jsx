@@ -57,9 +57,9 @@ export default function StandingsView({ onBack }) {
             <p className="text-xs text-blue-100 font-medium">
               {standingsSubTab === 'clausura'
                 ? (clausuraGroup === 'A' 
-                    ? 'Vélez se ubica 2° en zona de clasificación a Octavos de Final' 
-                    : 'Rosario Central y Argentinos lideran la Zona B')
-                : 'Vélez se ubica 4° en Tabla Anual clasificando a Copa Libertadores'}
+                    ? 'Vélez se ubica 3° en zona de clasificación a Octavos de Final' 
+                    : 'Central y Argentinos lideran el Grupo B')
+                : 'Vélez se ubica 4° en Tabla Anual, en zona de Copa Sudamericana'}
             </p>
           </div>
         </div>
@@ -163,8 +163,8 @@ export default function StandingsView({ onBack }) {
               {activeTeamsList.map((team) => {
                 const isVelez = team.isVelez;
                 const inPlayoffs = team.inPlayoffs;
-                const isLibertadores = team.copa === 'Libertadores' || (standingsSubTab === 'annual' && team.pos <= 4);
-                const isSudamericana = team.copa === 'Sudamericana' || (standingsSubTab === 'annual' && team.pos >= 5 && team.pos <= 10);
+                const isLibertadores = standingsSubTab === 'annual' && team.copa === 'Libertadores';
+                const isSudamericana = standingsSubTab === 'annual' && team.copa === 'Sudamericana';
 
                 return (
                   <tr 
@@ -193,12 +193,18 @@ export default function StandingsView({ onBack }) {
                     {/* Escudo + Nombre */}
                     <td className="py-2.5 px-3">
                       <div className="flex items-center gap-2">
+                        {(isVelez || team.logo) ? (
                         <img 
-                          src={isVelez ? "/escudo-velez.png" : (team.logo || team.shield)} 
+                          src={isVelez ? "/escudo-velez.png" : team.logo} 
                           alt={team.team} 
                           className="w-5 h-5 object-contain shrink-0" 
                           loading="lazy" 
                         />
+                        ) : (
+                          <span className="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 text-[8px] font-black text-slate-500 flex items-center justify-center shrink-0">
+                            {team.team.slice(0, 2).toUpperCase()}
+                          </span>
+                        )}
                         <span className={`truncate text-xs ${isVelez ? 'font-black text-[#001D4A]' : 'font-semibold text-slate-800'}`}>
                           {team.team}
                         </span>
@@ -306,15 +312,15 @@ export default function StandingsView({ onBack }) {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#0094D8] inline-block shadow-xs" />
-                <span className="text-slate-700 font-bold">1° al 4° Copa Libertadores</span>
+                <span className="text-slate-700 font-bold">1° al 3° Copa Libertadores</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#E5A000] inline-block shadow-xs" />
-                <span className="text-slate-700 font-bold">5° al 10° Copa Sudamericana</span>
+                <span className="text-slate-700 font-bold">4° al 9° Copa Sudamericana</span>
               </div>
             </div>
           )}
-          <span className="text-slate-400 font-mono">Actualizado Fecha 14</span>
+          <span className="text-slate-400 font-mono">Actualizado Fecha 15</span>
         </div>
       </div>
 

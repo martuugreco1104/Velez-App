@@ -23,6 +23,21 @@ export default function NextMatchCard({
 }) {
   const isDebt = user.status === 'deuda';
   const hasSeasonTicket = Boolean(user.seasonTicket);
+  const isAway = match.esLocal === false;
+
+  const velezSide = { name: 'VÉLEZ', logo: '/escudo-velez.png', label: isAway ? 'Visitante' : 'Local', isVelez: true };
+  const rivalSide = { name: (match.rivalShort || match.rival || '').toUpperCase(), logo: match.rivalShield, label: isAway ? 'Local' : 'Visitante', isVelez: false };
+  const teams = isAway ? [rivalSide, velezSide] : [velezSide, rivalSide];
+
+  const renderTeam = (t) => (
+    <div className="flex flex-col items-center flex-1 text-center min-w-0">
+      <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200/80 p-1 flex items-center justify-center shadow-xs">
+        <img src={t.logo} alt={t.name} className="w-12 h-12 object-contain drop-shadow-sm" loading="lazy" />
+      </div>
+      <span className="text-xs font-bold text-slate-900 mt-1.5 tracking-tight whitespace-nowrap">{t.name}</span>
+      <span className={`text-[10px] uppercase ${t.isVelez ? 'font-bold text-[#0055A4]' : 'font-medium text-slate-400'}`}>{t.label}</span>
+    </div>
+  );
 
   return (
     <div className="relative rounded-2xl bg-white border border-slate-200/90 shadow-card-soft overflow-hidden p-5 transition-all font-sans">
@@ -74,19 +89,8 @@ export default function NextMatchCard({
 
       {/* Face-off Teams Row */}
       <div className="flex items-center justify-between py-2 border-y border-slate-100/90 my-2 relative z-10">
-        {/* Vélez Sarsfield (Local) */}
-        <div className="flex flex-col items-center flex-1 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200/80 p-1 flex items-center justify-center shadow-xs">
-            <img 
-              src={match.homeTeam?.logo || "/escudo-velez.png"} 
-              alt="Vélez Sarsfield" 
-              className="w-12 h-12 object-contain drop-shadow-sm" 
-              loading="lazy"
-            />
-          </div>
-          <span className="text-xs font-bold text-slate-900 mt-1.5 tracking-tight">VÉLEZ</span>
-          <span className="text-[10px] font-bold text-[#0055A4] uppercase">Local</span>
-        </div>
+        {/* Equipo local */}
+        {renderTeam(teams[0])}
 
         {/* VS / Schedule */}
         <div className="flex flex-col items-center px-3 text-center">
@@ -99,22 +103,8 @@ export default function NextMatchCard({
           </span>
         </div>
 
-        {/* Rival: San Lorenzo */}
-        <div className="flex flex-col items-center flex-1 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200/80 p-1 flex items-center justify-center shadow-xs">
-            <img 
-              src={match.awayTeam?.logo || match.rivalShield || "/clubs/san_lorenzo.svg"} 
-              onError={(e) => { e.currentTarget.src = "/clubs/san_lorenzo.svg"; }}
-              alt="San Lorenzo" 
-              className="w-12 h-12 object-contain drop-shadow-sm"
-              loading="lazy"
-            />
-          </div>
-          <span className="text-xs font-bold text-slate-900 mt-1.5 tracking-tight">
-            SAN LORENZO
-          </span>
-          <span className="text-[10px] font-medium text-slate-400 uppercase">Visitante</span>
-        </div>
+        {/* Equipo visitante */}
+        {renderTeam(teams[1])}
       </div>
 
       {/* Match Date and Stadium */}
@@ -123,17 +113,41 @@ export default function NextMatchCard({
           <Calendar className="w-3.5 h-3.5 text-[#0055A4]" />
           <span>{match.fecha}</span>
         </div>
-        <div className="flex items-center gap-1.5 text-slate-500 font-medium">
-          <MapPin className="w-3.5 h-3.5 text-slate-400" />
-          <span>Estadio José Amalfitani</span>
+        <div className="flex items-center gap-1.5 text-slate-500 font-medium min-w-0">
+          <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <span className="truncate">{match.estadio || 'Estadio José Amalfitani'}</span>
         </div>
       </div>
 
       {/* CONDITIONAL STATUS BANNER & BUTTONS */}
       <div className="mt-4 pt-3 border-t border-slate-100 space-y-2.5 relative z-10">
 
+        {/* CASO V: Partido de visitante (no hay acceso para socios) */}
+        {!isDebt && isAway && (
+          <>
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2 text-xs text-slate-700">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-slate-400 shrink-0" />
+                <span className="font-bold text-xs truncate">Partido de visitante</span>
+              </div>
+              <span className="text-[11px] text-slate-500 font-semibold whitespace-nowrap shrink-0">
+                Sin público visitante
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={onOpenFixture}
+              className="w-full h-12 bg-[#0055A4] hover:bg-[#004080] text-white font-bold text-sm rounded-xl inline-flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm leading-none"
+            >
+              <Calendar className="w-4 h-4 shrink-0 text-white" />
+              <span>Ver fixture completo</span>
+            </button>
+          </>
+        )}
+
         {/* CASO A: Socio Al Día SIN Abono (Acceso libre gratuito con Carnet Digital) */}
-        {!isDebt && !hasSeasonTicket && (
+        {!isDebt && !isAway && !hasSeasonTicket && (
           <>
             <div className="p-3 rounded-xl bg-[#0A7E43]/10 border border-[#0A7E43]/25 flex items-center justify-between gap-2 text-xs text-[#0A7E43]">
               <div className="flex items-center gap-1.5 min-w-0">
@@ -182,7 +196,7 @@ export default function NextMatchCard({
         )}
 
         {/* CASO B: Socio con Abono Activo */}
-        {!isDebt && hasSeasonTicket && (
+        {!isDebt && !isAway && hasSeasonTicket && (
           <>
             <div className="p-3 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-between text-xs text-velez-primary">
               <div className="flex items-center gap-2.5">

@@ -65,8 +65,8 @@ export default function FixtureView({ onBack, defaultTab = 'fixture' }) {
               {activeTab === 'fixture' 
                 ? 'Partidos oficiales, resultados y próximas fechas'
                 : standingsSubTab === 'clausura'
-                  ? 'Vélez se ubica 2° en zona de clasificación a Octavos de Final'
-                  : 'Vélez se ubica 2° en Tabla Anual clasificando a Copa Libertadores'}
+                  ? 'Vélez se ubica 3° en zona de clasificación a Octavos de Final'
+                  : 'Vélez se ubica 4° en Tabla Anual, en zona de Copa Sudamericana'}
             </p>
           </div>
         </div>
@@ -341,8 +341,8 @@ export default function FixtureView({ onBack, defaultTab = 'fixture' }) {
                   {activeTeamsList.map((team) => {
                     const isVelez = team.isVelez;
                     const inPlayoffs = team.inPlayoffs;
-                    const isLibertadores = team.copa === 'Libertadores' || (standingsSubTab === 'annual' && team.pos <= 4);
-                    const isSudamericana = team.copa === 'Sudamericana' || (standingsSubTab === 'annual' && team.pos >= 5 && team.pos <= 10);
+                    const isLibertadores = standingsSubTab === 'annual' && team.copa === 'Libertadores';
+                    const isSudamericana = standingsSubTab === 'annual' && team.copa === 'Sudamericana';
 
                     return (
                       <tr 
@@ -371,12 +371,18 @@ export default function FixtureView({ onBack, defaultTab = 'fixture' }) {
                         {/* Escudo + Nombre */}
                         <td className="py-2.5 px-3">
                           <div className="flex items-center gap-2">
+                            {(isVelez || team.logo) ? (
                             <img 
-                              src={isVelez ? "/escudo-velez.png" : (team.logo || team.shield)} 
+                              src={isVelez ? "/escudo-velez.png" : team.logo} 
                               alt={team.team} 
                               className="w-5 h-5 object-contain shrink-0" 
                               loading="lazy" 
                             />
+                            ) : (
+                              <span className="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 text-[8px] font-black text-slate-500 flex items-center justify-center shrink-0">
+                                {team.team.slice(0, 2).toUpperCase()}
+                              </span>
+                            )}
                             <span className={`truncate text-xs ${isVelez ? 'font-black text-[#001D4A]' : 'font-semibold text-slate-800'}`}>
                               {team.team}
                             </span>
@@ -486,20 +492,20 @@ export default function FixtureView({ onBack, defaultTab = 'fixture' }) {
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#0094D8] shrink-0" />
                     <span className="font-bold text-slate-800 text-[11px]">
-                      Copa Libertadores (1° al 4°)
+                      Copa Libertadores (1° al 3°)
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#E5A000] shrink-0" />
                     <span className="font-bold text-slate-800 text-[11px]">
-                      Copa Sudamericana (5° al 10°)
+                      Copa Sudamericana (4° al 9°)
                     </span>
                   </div>
                 </div>
               )}
 
               <span className="text-[10px] text-slate-400 font-medium">
-                {standingsSubTab === 'clausura' ? 'Fecha 14 disputada' : 'Apertura + Clausura 2026'} • Oficial AFA
+                {standingsSubTab === 'clausura' ? 'Fecha 15 disputada' : 'Apertura + Clausura 2026'} • Oficial AFA
               </span>
             </div>
           </div>
